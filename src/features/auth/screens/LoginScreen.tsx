@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, SafeAreaViewBase, KeyboardAvoidingView, Platform } from 'react-native';
 import { useAuthStore } from '../store/authStore';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -20,7 +20,7 @@ export default function LoginScreen() {
   }, [user]);
 
   return (
-    <View className="flex-1 justify-center items-center p-4 w-full bg-white">
+    <KeyboardAvoidingView className="flex-1 justify-center items-center p-4 w-full bg-white" behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       {loading ? (
         <ActivityIndicator size="large" />
       ) : (
@@ -32,20 +32,23 @@ export default function LoginScreen() {
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
-            className="border border-gray-300 w-full mb-2 p-2 rounded"
+            className="border border-gray-400 w-full m-2 p-4 rounded"
           />
           <TextInput
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
-            className="border border-gray-300 w-full mb-4 p-2 rounded"
+            className="border border-gray-400 w-full mb-4 p-4 rounded"
           />
 
           {/* Password vergessen (rechts) */}
-          <View className="w-full mb-4 flex-row justify-end">
+          <View className="w-full mb-4 flex-row justify-between">
             <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
               <Text className="text-blue-500">Password vergessen?</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+              <Text className="text-gray-500">Register here</Text>
             </TouchableOpacity>
           </View>
 
@@ -57,14 +60,8 @@ export default function LoginScreen() {
             <Text className="text-white font-bold text-center">Login</Text>
           </TouchableOpacity>
 
-          {/* Register (links) */}
-          <View className="w-full flex-row justify-start">
-            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-              <Text className="text-gray-500">Register here</Text>
-            </TouchableOpacity>
-          </View>
         </>
       )}
-    </View>
+    </KeyboardAvoidingView>
   );
 }

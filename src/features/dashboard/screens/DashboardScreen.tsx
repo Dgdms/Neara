@@ -10,7 +10,8 @@ export default function DashboardScreen() {
   }, []);
 
   if (loading) return <ActivityIndicator size="large" style={{ flex: 1 }} />;
-  console.log(groups)
+
+
   return (
     <View style={{ flex: 1, padding: 16 }}>
       <Text style={{ fontSize: 24, marginBottom: 16 }}>Gruppen</Text>
